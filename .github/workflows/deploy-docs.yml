@@ -1,0 +1,53 @@
+# 构建文档站并发布到 GitHub Pages。
+# 本文件随文档源同步到门面仓库 officesdk/officesdk-core 的 .github/workflows/deploy-docs.yml（scripts/release/docs-sync.mjs），
+# 文档源在该仓库的 docs/ 目录；只有 docs/ 或本工作流变化时才构建（只改 README 版本表不触发）。
+# 一次性设置：仓库 Settings → Pages → Build and deployment → Source 选「GitHub Actions」。
+name: Deploy docs
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/**'
+      - '.github/workflows/deploy-docs.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: docs
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: docs/package-lock.json
+      - run: npm ci
+      # build 先由 api-src/ 生成 API 参考，再构建站点
+      - run: npm run build
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs/.vitepress/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,5 @@
+node_modules/
+.vitepress/dist/
+.vitepress/cache/
+# 构建时由 scripts/gen-api.mjs 生成
+api/

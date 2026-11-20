@@ -98,6 +98,7 @@ await editor.start();
 <!-- officesdk-core:versions:start -->
 | 版本 | GitHub Release（Kit） | npm（编辑器） | 文档 |
 |---|---|---|---|
+| 0.3.0-rc.1（预发布） | [v0.3.0-rc.1](https://github.com/officesdk/officesdk-core/releases/tag/v0.3.0-rc.1) | [@officesdk/officesdk-core-editor@0.3.0-rc.1](https://www.npmjs.com/package/@officesdk/officesdk-core-editor/v/0.3.0-rc.1) | [文档](https://officesdk.github.io/officesdk-core/) |
 <!-- officesdk-core:versions:end -->
 
 ## License
