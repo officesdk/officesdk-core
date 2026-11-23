@@ -27,7 +27,7 @@ ui: { versionSwitch: { disabled: true } }
 
 | 字段 | 说明 |
 | --- | --- |
-| `versionSwitch.disabled` | `true` 时不显示工具栏里切换到旧版界面的入口。离线页面没有账号级的界面偏好可切换，通常传 `true`；省略时显示入口 |
+| `versionSwitch.disabled` | 省略或为 `true` 时隐藏工具栏里切换到旧版界面的入口（离线页面没有账号级的界面偏好可切换）；传 `false` 时显示。省略即隐藏是 0.3.0-rc.3 起的行为，0.3.0-rc.1、rc.2 省略时显示 |
 | `versionSwitch.feedbackUrl` | 可选，入口里的反馈链接，只接受 `http:` / `https:` 地址；省略时没有反馈链接 |
 
 `ui` 只接受上面两个字段，其他字段或其他编辑器传 `ui` 会被拒绝（错误码 `invalid-request`）。
@@ -42,7 +42,7 @@ ui: { versionSwitch: { disabled: true } }
 
 ## 图片与附件
 
-编辑模式同时提供 `assets` 与 `attachment.store` 时，才能插入图片和附件。普通附件在选择后先写入 Kit，再插入表格。
+编辑模式同时提供 `assets` 与 `attachment.store` 时，才能插入图片和附件。普通附件在选择后先写入 runtime，再插入表格。
 
 ## 图标字体
 
@@ -60,7 +60,9 @@ if (editor.suite === "sheet") {
 
 ### 写入
 
-编辑模式下可以经编辑器写入工作簿。写入和界面上的编辑一样，经 `change` 事件交给 Host，由 Kit 保存。
+完整的调用示例（AI 修改、错误处理、只读模式）见[用 JS API 修改文档](../guide/ai-editing.md#sheet)。
+
+编辑模式下可以经编辑器写入工作簿。写入和界面上的编辑一样，经 `change` 事件交给 Host，由 runtime 保存。
 
 | 对象 | 成员 | 说明 |
 | --- | --- | --- |

@@ -14,14 +14,14 @@
 | 配置项 | 必填 | 说明 |
 | --- | --- | --- |
 | `container` | 是 | 编辑器挂载的 DOM 元素 |
-| `suite` | 是 | `"document"`、`"presentation"`、`"sheet"` 或 `"pdf"`，与 Kit `open` 响应的 `suite` 一致 |
+| `suite` | 是 | `"document"`、`"presentation"`、`"sheet"` 或 `"pdf"`，与 runtime `open` 响应的 `suite` 一致 |
 | `mode` | 是 | `"readonly"` 或 `"edit"` |
-| `content` | 是 | Kit `open` / `content` 响应中的 `content`，原样传入 |
+| `content` | 是 | runtime `open` / `content` 响应中的 `content`，原样传入 |
 | `language` | 是 | 界面语言，如 `"zh-CN"`、`"en-US"`（各编辑器支持的语言见各自页面） |
 | `direction` | 是 | 目前只支持 `"ltr"` |
 | `resources` | 是 | 编辑器的静态资源，见 [resources](#resources) |
 | `fontProvider` | 是 | 字体目录与字体读取，见 [fontProvider](#fontprovider) |
-| `file` | 否 | `{ id?, name? }`：`name` 是展示用的文件名（不能是路径）；`id` 是编辑器内部使用的文件标识，缺省时自动生成，与 Kit 的 `documentId` 无关 |
+| `file` | 否 | `{ id?, name? }`：`name` 是展示用的文件名（不能是路径）；`id` 是编辑器内部使用的文件标识，缺省时自动生成，与 runtime 的 `documentId` 无关 |
 | `assets` | 否 | 文档内图片等资源的读取，见 [assets](#assets) |
 | `attachment` | 否 | 插入与预览附件，见 [attachment](#attachment) |
 
@@ -89,7 +89,7 @@ interface OfflineMediaStore {
 }
 ```
 
-- `store` 先把文件字节交给 Kit，再返回 Kit 给出的资源引用。
+- `store` 先把文件字节交给 runtime，再返回 runtime 给出的资源引用。
 - `cancel` 取消尚未完成的插入，重复调用应成功；它不删除正文已经引用的资源。
 - 插入图片与附件需要同时提供 `store` 和 `assets`，缺一项时插入不可用。
 - 只读模式不接受 `store`。

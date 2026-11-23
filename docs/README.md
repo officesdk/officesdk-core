@@ -9,11 +9,12 @@ Source of the Office SDK documentation site (<https://officesdk.github.io/office
 ```sh
 cd docs
 npm ci
-npm run build      # generates the API reference from api-src/ and builds the site
+npm run build      # generates the API reference from api-src/, checks the guide examples and builds the site
 npm run preview
 ```
 
 - `api-src/public.d.ts`: type declarations of `@officesdk/officesdk-core-editor` for this version; `scripts/gen-api.mjs` turns them into `api/*.md`.
+- `scripts/check-examples.mjs` type-checks the TypeScript examples of the JS API guide (`guide/ai-editing.md`, `en/guide/ai-editing.md`) against the same declarations; `npm run build` runs it after the API reference, and `npm test` covers it.
 - `api-src/release-public.json`: version information shown on the versioning page.
 
 ## License

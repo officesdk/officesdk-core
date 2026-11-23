@@ -7,7 +7,7 @@
 | 模式 | 额外要求 |
 | --- | --- |
 | `readonly` | 不接受 `attachment.store` |
-| `edit` | 必须传 `attachment.store`：每次变化都是整份 PDF 快照，经它写入 Kit |
+| `edit` | 必须传 `attachment.store`：每次变化都是整份 PDF 快照，经它写入 runtime |
 
 PDF 不使用 `nextChangeSetRevision`。
 
@@ -23,13 +23,13 @@ PDF 不使用 `nextChangeSetRevision`。
 
 ## 变化
 
-变化格式为 `pdf-snapshot-v1`：每次交付整份快照，而不是增量修改。原文件与每份快照都作为 Kit 的媒体保存，通过 `assets.resolveReadUrl` 读取。
+变化格式为 `pdf-snapshot-v1`：每次交付整份快照，而不是增量修改。原文件与每份快照都作为 runtime 的媒体保存，通过 `assets.resolveReadUrl` 读取。
 
 ## 页面内接口 `api.pdf`
 
 | 成员 | 说明 |
 | --- | --- |
-| `exportSnapshot()` | 返回页面当前的 PDF 字节（`ArrayBuffer`），可与 Kit 合并后的快照对照 |
+| `exportSnapshot()` | 返回页面当前的 PDF 字节（`ArrayBuffer`），可与 runtime 合并后的快照对照 |
 
 ## 示例
 

@@ -1,13 +1,14 @@
 # 快速开始
 
-Office SDK 由两部分组成，二者版本号相同，须配套使用：
+Office SDK 由三部分组成，版本号相同，须配套使用（整体说明见[产品概览](./overview.md)）：
 
 | 组成 | 形式 | 运行位置 | 负责 |
 | --- | --- | --- | --- |
-| 页面整合包 `@officesdk/officesdk-core-editor` | npm 包 | 应用内的 WebView 页面 | 加载编辑器资源，创建编辑器，把用户的编辑变化交给宿主 |
-| Kit | 每个平台一个压缩包 | 应用随附的本地进程 | 打开文件、接收变化、保存和导出文件 |
+| editor（页面整合包 `@officesdk/officesdk-core-editor`） | npm 包 | 应用内的 WebView 页面 | 加载编辑器资源，创建编辑器，把用户的编辑变化交给宿主 |
+| runtime | 每个平台一个压缩包 | 应用随附的本地进程 | 打开文件、接收变化、保存和导出文件 |
+| kit | 目前在 runtime 包内 | 由 runtime 调用 | 格式转换与渲染，见 [kit 文档引擎](./kit.md) |
 
-页面不直接连接 Kit。宿主应用（下文称 Host）在中间转发：页面 → Host → Kit。
+页面不直接连接 runtime。宿主应用（下文称 Host）在中间转发：页面 → Host → runtime。
 
 ## 1. 安装页面整合包
 
@@ -19,25 +20,25 @@ npm install @officesdk/officesdk-core-editor@next
 
 要求 Node.js 20.19 或更新版本（只在构建时需要）。
 
-## 2. 取得同版本的 Kit
+## 2. 取得同版本的 runtime
 
-页面整合包自带 `offline-kit` 命令，按包的版本下载对应平台的 Kit：
+页面整合包自带 `offline-kit` 命令（命令名里的 kit 即 runtime 包），按包的版本下载对应平台的 runtime：
 
 ```sh
 npx offline-kit fetch --target aarch64-apple-darwin,x86_64-pc-windows-msvc --out vendor/kit
 ```
 
-也可以从 GitHub Release 下载，详见[安装与启动 Kit](./install-kit.md)。
+也可以从 GitHub Release 下载，详见[安装与启动 runtime](./install-kit.md)。
 
-## 3. 启动 Kit
+## 3. 启动 runtime
 
-Host 拉起 Kit 进程，并传入一个可写的工作目录：
+Host 拉起 runtime 进程，并传入一个可写的工作目录：
 
 ```sh
 offline-kit-runtime serve --work <可写目录>
 ```
 
-Kit 在标准输出写出第一帧 `{"ready":true,...}` 后，Host 才能发送命令。
+runtime 在标准输出写出第一帧 `{"ready":true,...}` 后，Host 才能发送命令。
 
 ## 4. 在页面里创建编辑器
 
@@ -53,7 +54,7 @@ const editor = await createOfflineEditor({
   container: document.getElementById("editor")!,
   suite: "document",            // document | presentation | sheet | pdf
   mode: "readonly",
-  content,                      // Host 从 Kit open 响应里拿到的 content
+  content,                      // Host 从 runtime open 响应里拿到的 content
   language: "zh-CN",
   direction: "ltr",
   resources: {
@@ -87,7 +88,10 @@ await editor.start();
 
 ## 下一步
 
-- [安装与启动 Kit](./install-kit.md)
+- [产品概览](./overview.md)
+- [安装与启动 runtime](./install-kit.md)
 - [打开、编辑、保存](./open-edit-save.md)
+- [用 JS API 修改文档](./ai-editing.md)
+- [runtime 接口](../reference/runtime.md)
 - [编辑器配置](../editors/index.md)
 - [版本与兼容性](../reference/versioning.md)

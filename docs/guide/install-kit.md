@@ -1,6 +1,8 @@
-# 安装与启动 Kit
+# 安装与启动 runtime
 
-Kit 是随应用分发的本地文档进程。它的版本必须与页面整合包 `@officesdk/officesdk-core-editor` 相同。
+runtime 是随应用分发的本地文档进程，文档引擎 kit 目前也在 runtime 包里一起提供。runtime 的版本必须与页面整合包 `@officesdk/officesdk-core-editor` 相同。
+
+下载命令 `offline-kit`、清单 `kit-manifest.json`、环境变量 `OFFLINE_KIT_*` 与包内 `guide/` 说明里的「Kit」都指 runtime 包，这些名称已经发布，保持不变。对 Host 承诺的全部接口见 [runtime 接口](../reference/runtime.md)。
 
 ## 支持的平台
 
@@ -29,7 +31,7 @@ npx offline-kit fetch --target aarch64-apple-darwin,x86_64-pc-windows-msvc --out
 npx offline-kit outdated --channel stable               # 检查是否有更新的稳定版
 ```
 
-`fetch` 从下文的 GitHub Release 下载与本包同版本的 Kit（`https://github.com/officesdk/officesdk-core/releases/download/v<版本>/`），校验 SHA-256 与大小后解压到 `<out>/<target>/`（整体替换）。下载内容缓存在 `~/.cache/offline-kit/`，缓存齐全时可以离线重复执行。网络失败或摘要不符时以非零状态退出。
+`fetch` 从下文的 GitHub Release 下载与本包同版本的 runtime（`https://github.com/officesdk/officesdk-core/releases/download/v<版本>/`），校验 SHA-256 与大小后解压到 `<out>/<target>/`（整体替换）。下载内容缓存在 `~/.cache/offline-kit/`，缓存齐全时可以离线重复执行。网络失败或摘要不符时以非零状态退出。
 
 `outdated` 和 `fetch --channel` 从 npm 上 `@officesdk/officesdk-core-editor` 的 dist-tag 得知各通道的最新版本：`stable` 对应 `latest`；`rc` 对应 `next` 与 `latest` 中较新的一个，所以稳定版发出后，rc 通道也会提示它。
 
@@ -46,14 +48,14 @@ npx offline-kit outdated --channel stable               # 检查是否有更新�
 
 ### 从 GitHub Release 下载
 
-Kit 在 [officesdk/officesdk-core 的 Releases](https://github.com/officesdk/officesdk-core/releases) 发布（tag `v<版本>`），每个版本附带：
+runtime 在 [officesdk/officesdk-core 的 Releases](https://github.com/officesdk/officesdk-core/releases) 发布（tag `v<版本>`），每个版本附带：
 
-- `officesdk-core-runtime-<版本>-<target>.tar.gz`：各平台的 Kit（0.2.5-rc.7 及以前名为 `offline-kit-<版本>-<target>.tar.gz`）；
+- `officesdk-core-runtime-<版本>-<target>.tar.gz`：各平台的 runtime（0.2.5-rc.7 及以前名为 `offline-kit-<版本>-<target>.tar.gz`）；
 - `release.json`：版本信息与各文件的摘要；
 - `SHA256SUMS`：各文件的 SHA-256（其中列出的页面整合包不在 Release 里，从 npm 安装）；
 - `LICENSE.md`：许可声明；
-- `kit-manifest.json`：Kit 与编辑器资源的下载清单，按平台列出 Kit 包和包内每个文件的摘要，编辑器资源指向 npm 包
-  `@officesdk/officesdk-core-editor`，供需要在运行时下载 Kit 的调用方使用。
+- `kit-manifest.json`：runtime 与编辑器资源的下载清单（字段见 [runtime 接口](../reference/runtime.md#kit-manifest-json)），按平台列出 runtime 包和包内每个文件的摘要，编辑器资源指向 npm 包
+  `@officesdk/officesdk-core-editor`，供需要在运行时下载 runtime 的调用方使用。
 
 各版本的 Release 与 npm 包对照见[门面仓库首页的版本表](https://github.com/officesdk/officesdk-core#版本)。
 
@@ -66,7 +68,7 @@ tar -xzf officesdk-core-runtime-<版本>-aarch64-apple-darwin.tar.gz -C vendor/k
 
 ## 包内文件
 
-这些文件放在同一目录。Kit 按自身可执行文件所在目录找到它们，启动命令不传这些路径。
+这些文件放在同一目录。runtime 按自身可执行文件所在目录找到它们，启动命令不传这些路径。
 
 | 文件 | 作用 |
 | --- | --- |
@@ -84,9 +86,9 @@ tar -xzf officesdk-core-runtime-<版本>-aarch64-apple-darwin.tar.gz -C vendor/k
 offline-kit-runtime serve --work <可写目录>
 ```
 
-- 参数只有 `serve` 和 `--work`。`<可写目录>` 是应用交给 Kit 的工作根，Kit 在里面保存打开中的文档记录。Host 不读取其中的内容。
+- 参数只有 `serve` 和 `--work`。`<可写目录>` 是应用交给 runtime 的工作根，runtime 在里面保存打开中的文档记录。Host 不读取其中的内容。
 - 不带 `serve` 启动会失败退出。
-- 工作根下的 `production.json` 是转换配置：不存在时 Kit 写入默认内容，已存在时原样使用。修改后需重启 Kit。
+- 工作根下的 `production.json` 是转换配置：不存在时 runtime 写入默认内容，已存在时原样使用。修改后需重启 runtime。
 
 查看版本（不需要工作根，也不启动服务）：
 
@@ -101,18 +103,18 @@ offline-kit-runtime --version --json   # 完整的发行信息，与包内 relea
 
 | 流 | 方向 | 内容 |
 | --- | --- | --- |
-| stdin | Host → Kit | 命令帧 |
-| stdout | Kit → Host | 响应帧 |
-| stderr | Kit → Host | 错误文本，只用于日志，不是命令帧 |
+| stdin | Host → runtime | 命令帧 |
+| stdout | runtime → Host | 响应帧 |
+| stderr | runtime → Host | 错误文本，只用于日志，不是命令帧 |
 | 第 3 号描述符 | 双向 | 媒体与字体的字节 |
 
 第 3 号描述符必须是管道或 socket。Node.js 中写成 `stdio: ["pipe", "pipe", "pipe", "pipe"]`。
 
-Windows 上这条字节通道拆成两条单向管道：Kit 读端与 Kit 写端。可以设置环境变量 `OFFLINE_KIT_STREAM_HANDLES=<读端句柄>,<写端句柄>` 传入两个可继承句柄；不设置时 Kit 使用继承的描述符 3（读）与 4（写），Node.js 中写成五个 `"pipe"`。
+Windows 上这条字节通道拆成两条单向管道：runtime 读端与 runtime 写端。可以设置环境变量 `OFFLINE_KIT_STREAM_HANDLES=<读端句柄>,<写端句柄>` 传入两个可继承句柄；不设置时 runtime 使用继承的描述符 3（读）与 4（写），Node.js 中写成五个 `"pipe"`。
 
 ## ready 帧
 
-Kit 完成启动检查后，向 stdout 写出第一帧：
+runtime 完成启动检查后，向 stdout 写出第一帧：
 
 ```json
 {"ready":true,"protocolVersion":"5","kitVersion":"0.2.5"}
@@ -126,7 +128,7 @@ Host 必须先读到 `ready` 为 `true`，再发送任何命令。`kitVersion` �
 
 ## HarmonyOS
 
-HarmonyOS 应用不能执行包内的可执行文件，Kit 以 N-API 模块 `liboffline_kit.so` 运行在应用进程的线程上，没有 `compose-worker`。命令帧、字节通道、命令和错误码与进程模式相同。包内的 `index.d.ts` 描述 ArkTS 接口：
+HarmonyOS 应用不能执行包内的可执行文件，runtime 以 N-API 模块 `liboffline_kit.so` 运行在应用进程的线程上，没有 `compose-worker`。命令帧、字节通道、命令和错误码与进程模式相同。包内的 `index.d.ts` 描述 ArkTS 接口：
 
 ```ts
 import kit from 'liboffline_kit.so';

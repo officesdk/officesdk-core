@@ -1,6 +1,6 @@
 # 许可
 
-Office SDK Core（npm 包 `@officesdk/officesdk-core-editor` 与 Kit）是**闭源商用软件**，Copyright © 2026 OfficeSDK.com，保留所有权利。它不以 MIT、Apache-2.0、GPL 或任何其他公开许可发布。
+Office SDK Core（npm 包 `@officesdk/officesdk-core-editor` 与 runtime 包，kit 目前随 runtime 包提供）是**闭源商用软件**，Copyright © 2026 OfficeSDK.com，保留所有权利。它不以 MIT、Apache-2.0、GPL 或任何其他公开许可发布。
 
 ## 适用条款
 
@@ -14,7 +14,7 @@ Office SDK Core（npm 包 `@officesdk/officesdk-core-editor` 与 Kit）是**闭�
 
 ## LICENSE.md
 
-npm 包、每个 Kit 压缩包和 GitHub Release 都附带同一份 `LICENSE.md`。它只是声明，本身不授予任何许可，具体条款以 EULA 为准。
+npm 包、每个 runtime 压缩包和 GitHub Release 都附带同一份 `LICENSE.md`。它只是声明，本身不授予任何许可，具体条款以 EULA 为准。
 
 ## 基于本软件的应用与插件
 
