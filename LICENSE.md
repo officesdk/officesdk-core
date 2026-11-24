@@ -1,9 +1,9 @@
-# Office SDK Core License Notice
+# OfficeSDK Core License Notice
 
 Copyright (c) 2026 OfficeSDK.com. All rights reserved.
 
 This repository, `officesdk/officesdk-core`, contains proprietary software
-of Office SDK Core ("Software"). It is closed-source commercial software.
+of OfficeSDK Core ("Software"). It is closed-source commercial software.
 It is not licensed under the MIT License, Apache-2.0, GPL, or any other
 public license.
 
@@ -11,7 +11,7 @@ This file is a notice only. It does not itself grant any license.
 
 ## Governing terms
 
-Use of the Software is governed by the Office SDK End User License
+Use of the Software is governed by the OfficeSDK End User License
 Agreement published at:
 
 https://officesdk.com/legal/eula
@@ -36,11 +36,11 @@ Software in a product.
 
 ## Apps and plugins
 
-Applications and plugins built on Office SDK Core and published by the
+Applications and plugins built on OfficeSDK Core and published by the
 `officesdk` organization under the MIT License are separate works. The
 MIT License applies only to the code in those repositories. It does not
 apply to this repository, and it does not grant any right to use,
-reproduce, modify, or redistribute Office SDK Core.
+reproduce, modify, or redistribute OfficeSDK Core.
 
 You may call or embed the Software from your own application or plugin
 only within the scope stated in the EULA and your order. Doing so does
