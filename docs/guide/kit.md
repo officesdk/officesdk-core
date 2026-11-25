@@ -46,4 +46,4 @@ kit 可以作为命令行工具运行，也可以作为 MCP 服务接入 AI 客�
 
 ## 了解更多
 
-kit 的完整介绍（能力、格式、Office.js 覆盖范围、检查规则）见 GitHub 上的 [officekit 介绍](https://github.com/officesdk/officesdk-core/tree/main/officekit)。其中尚未随本 SDK 提供的能力，以独立发布时的说明为准。
+kit 的完整介绍（能力、格式、Office.js 覆盖范围、检查规则）见 GitHub 上的 [officekit 介绍](https://github.com/officesdk/OfficeAPI)。其中尚未随本 SDK 提供的能力，以独立发布时的说明为准。

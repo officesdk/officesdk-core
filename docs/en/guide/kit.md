@@ -46,4 +46,4 @@ While the kit ships inside the runtime package, it runs on the runtime's platfor
 
 ## Learn more
 
-A full introduction to the kit (capabilities, formats, Office.js coverage, check rules) is on GitHub: [officekit](https://github.com/officesdk/officesdk-core/tree/main/officekit). Capabilities it describes that this SDK does not ship yet follow the notes of the standalone release.
+A full introduction to the kit (capabilities, formats, Office.js coverage, check rules) is on GitHub: [officekit](https://github.com/officesdk/OfficeAPI). Capabilities it describes that this SDK does not ship yet follow the notes of the standalone release.
